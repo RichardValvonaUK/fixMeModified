@@ -1,0 +1,37 @@
+<div class='product-tile'>
+	<% @background = "ff8800" %>
+	<div class='image-and-title'>
+		<div class='image'>
+			<%= image_tag('missing_image_100_67.gif') %>
+		</div>
+		<div class='title'>
+			<%= link_to(product.name, product) %>
+		</div>
+	</div>
+	<div class='strapline'>
+		<% #= product.strapline
+		%>
+		<%= pluralize(product.variants.size, 'variant') %><br />
+		<% 
+		  @lowest_price = 90000000 # Arbitrary number much higher than top price. All prices lower.
+		  @highest_price = -1 # All prices greater than -1.
+		  product.variants.each do |variant|
+
+		  if (variant.price < @lowest_price)
+		    @lowest_price = variant.price
+		  end
+
+		  if (variant.price > @highest_price)
+		    @highest_price = variant.price
+		  end
+		%>
+		<% end %>
+		<% if @lowest_price == @highest_price %>
+		All £<%= sprintf('%.2f', Float(@lowest_price) / 100) %><br />
+		<% else %>
+		From £<%= sprintf('%.2f', Float(@lowest_price) / 100) %> to £<%= sprintf('%.2f', Float(@highest_price) / 100) %><br />
+		<% end %>
+	</div>
+
+	
+</div>
